@@ -1,0 +1,8 @@
+/home/riwip5-047/Documents/Leo/Simulacro2/obj/Debug/net8.0/Simulacro2.csproj.AssemblyReference.cache
+/home/riwip5-047/Documents/Leo/Simulacro2/obj/Debug/net8.0/Simulacro2.GeneratedMSBuildEditorConfig.editorconfig
+/home/riwip5-047/Documents/Leo/Simulacro2/obj/Debug/net8.0/Simulacro2.AssemblyInfoInputs.cache
+/home/riwip5-047/Documents/Leo/Simulacro2/obj/Debug/net8.0/Simulacro2.AssemblyInfo.cs
+/home/riwip5-047/Documents/Leo/Simulacro2/obj/Debug/net8.0/Simulacro2.csproj.CoreCompileInputs.cache
+/home/riwip5-047/Documents/Leo/Simulacro2/obj/Debug/net8.0/Simulacro2.MvcApplicationPartsAssemblyInfo.cs
+/home/riwip5-047/Documents/Leo/Simulacro2/obj/Debug/net8.0/Simulacro2.MvcApplicationPartsAssemblyInfo.cache
+/home/riwip5-047/Documents/Leo/Simulacro2/obj/Debug/net8.0/Simulacro2.sourcelink.json

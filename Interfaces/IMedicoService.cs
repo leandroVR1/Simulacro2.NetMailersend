@@ -10,8 +10,8 @@ namespace Simulacro2.Interfaces
     {
         Task <IEnumerable<Medico>> GetAllMedicos();
         Task<Medico> GetMedicoById(int Id);
-        Task<Medico> AddMedico(Medico medico);
-        Task<Medico> UpdateMedico(Medico medico);
+        Task<Medico> CreateMedico(Medico medico);
+        Task<Medico> UpdateMedico(int Id, Medico medico);
         Task<Medico> DeleteMedico(int Id);
         Task<IEnumerable<Medico>> GetDeletedMedico();
 

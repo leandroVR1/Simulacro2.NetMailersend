@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,11 +18,17 @@ namespace Simulacro2.Services
 
         public async Task<IEnumerable<Medico>> GetAllMedicos()
         {
-            return await _context.Medicos.Where(a => a.Estado != Estado.Eliminado).Include(a => a.Especialidad).ToListAsync();
+            return await _context.Medicos
+                .Where(a => a.Estado != EstadoEnum.Eliminado)
+                .Include(a => a.Especialidades)
+                .ToListAsync();
         }
-        public async Task<Medico> GetMedicoById(int Id)
+
+        public async Task<Medico> GetMedicoById(int id)
         {
-            return await _context.Medicos.Include(a => a.Especialidad).FirstOrDefaultAsync(a => a.Id == Id);
+            return await _context.Medicos
+                .Include(a => a.Especialidades)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<Medico> CreateMedico(Medico medico)
@@ -33,20 +38,26 @@ namespace Simulacro2.Services
             return medico;
         }
 
-        public async Task<Medico> UpdateMedico(int Id, Medico medico)
+        public async Task<Medico> UpdateMedico(int id, Medico medico)
         {
-            var existingMedico = await _context.Medicos.FindAsync(Id);
+            var existingMedico = await _context.Medicos.FindAsync(id);
             if (existingMedico == null)
             {
                 return null;
             }
             existingMedico.Nombre = medico.Nombre;
+            existingMedico.Correo = medico.Correo;
+            existingMedico.Telefono = medico.Telefono;
+            existingMedico.Estado = medico.Estado;
+            existingMedico.EspecialidadId = medico.EspecialidadId;
+
             await _context.SaveChangesAsync();
             return existingMedico;
         }
-        public async Task<Medico> DeleteMedico(int Id)
+
+        public async Task<Medico> DeleteMedico(int id)
         {
-            var existingMedico = await _context.Medicos.FindAsync(Id);
+            var existingMedico = await _context.Medicos.FindAsync(id);
             if (existingMedico == null)
             {
                 return null;
@@ -55,11 +66,13 @@ namespace Simulacro2.Services
             await _context.SaveChangesAsync();
             return existingMedico;
         }
+
         public async Task<IEnumerable<Medico>> GetDeletedMedico()
         {
-            return await _context.Medicos.Where(a => a.Estado == Enum.Estado.Eliminado).ToListAsync();
+            return await _context.Medicos
+                .Where(a => a.Estado == EstadoEnum.Eliminado)
+                .Include(a => a.Especialidades)
+                .ToListAsync();
         }
-      
-
     }
 }

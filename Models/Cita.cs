@@ -9,9 +9,12 @@ namespace Simulacro2.Models
     {
         public int Id { get; set; }
         public DateTime? Fecha { get; set; }
-        public Enum? Estado { get; set; }
+        public EstadoEnum Estado { get; set; }
         public int? PacienteId { get; set; }
         public int? MedicoId { get; set; }
+        public Paciente Pacientes { get; set; }
+        public Medico Medicos { get; set; }
+        public ICollection<Tratamiento> Tratamientos { get; set; }
 
     }
 }

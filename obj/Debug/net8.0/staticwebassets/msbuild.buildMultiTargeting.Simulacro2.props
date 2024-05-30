@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Simulacro2.props" />
+</Project>

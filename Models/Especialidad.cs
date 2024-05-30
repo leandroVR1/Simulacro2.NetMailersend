@@ -10,7 +10,8 @@ namespace Simulacro2.Models
         public int Id { get; set; }
         public string? Nombre { get; set; }
         public string? Descripcion { get; set; }
-        public Enum? Estado { get; set; }
+         public EstadoEnum Estado { get; set; }
+         public ICollection<Medico> Medicos { get; set; }
         
     }
 }

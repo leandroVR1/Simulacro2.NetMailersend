@@ -19,7 +19,7 @@ namespace Simulacro2.Services
 
         public async Task<IEnumerable<Medico>> GetAllMedicos()
         {
-            return await _context.Medicos.Where(a => !a.IsDeleted).Include(a => a.Especialidad).ToListAsync();
+            return await _context.Medicos.Where(a => a.Estado != Estado.Eliminado).Include(a => a.Especialidad).ToListAsync();
         }
         public async Task<Medico> GetMedicoById(int Id)
         {

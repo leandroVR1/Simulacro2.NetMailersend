@@ -8,7 +8,7 @@ namespace Simulacro2.Interfaces
 {
     public interface IMedicoService
     {
-        Task <IEnumerable<Medico>> GetAllMedicos();
+        Task<IEnumerable<Medico>> GetAllMedicos();
         Task<Medico> GetMedicoById(int Id);
         Task<Medico> CreateMedico(Medico medico);
         Task<Medico> UpdateMedico(int Id, Medico medico);

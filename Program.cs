@@ -24,6 +24,10 @@ AddCustomDbContext<BaseContext>(builder.Configuration.GetConnectionString("MySql
 builder.Services.AddScoped<MedicoService>();
 builder.Services.AddScoped<IMedicoService, MedicoService>();
 
+builder.Services.AddScoped<EspecialidadService>();
+builder.Services.AddScoped<IEspecialidadService, EspecialidadService>();
+
+
 // Configuración de los controladores
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

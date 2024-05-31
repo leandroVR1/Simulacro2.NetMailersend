@@ -89,3 +89,7 @@ VALUES
 
 SELECT * FROM Medicos;
 
+
+
+SELECT * FROM Medicos WHERE Estado != 'Eliminado';
+SELECT * FROM Medicos WHERE Estado = 'Disponible';

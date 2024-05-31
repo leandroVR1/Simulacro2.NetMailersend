@@ -6,12 +6,12 @@ using Simulacro2.Models;
 
 namespace Simulacro2.Data
 {
-    public interface IEspecialidad
+    public interface IEspecialidadService
     {
         Task <IEnumerable<Especialidad>> GetAllEspecialidades();
         Task<Especialidad> GetEspecialidadById(int Id);
-        Task<Especialidad> AddEspecialidad(Especialidad especialidad);
-        Task<Especialidad> UpdateEspecialidad(Especialidad especialidad);
+        Task<Especialidad> CreateEspecialidad(Especialidad especialidad);
+        Task<Especialidad> UpdateEspecialidad(int Id, Especialidad especialidad);
         Task<Especialidad> DeleteEspecialidad(int Id);
         Task<IEnumerable<Especialidad>> GetDeletedEspecialidad();
         

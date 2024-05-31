@@ -41,20 +41,14 @@ namespace Simulacro2.Services
         }
         public async Task<IEnumerable<Especialidad>> GetAllEspecialidades()
         {
-            try
-            {
-                // Filtrar las especialidades por estado disponible
-                var especialidades = await _context.Especialidades
+           
+            
+                return await _context.Especialidades
                     .Where(m => m.Estado == EstadoEnum.Disponible)
                     .ToListAsync();
 
-                return especialidades;
-            }
-            catch (Exception ex)
-            {
-                // Manejar errores
-                throw new Exception("Error al obtener las especialidades.", ex);
-            }
+                
+          
 
         }
         public async Task<Especialidad> GetEspecialidadById(int Id)

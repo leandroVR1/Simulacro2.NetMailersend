@@ -6,12 +6,12 @@ using Simulacro2.Models;
 
 namespace Simulacro2.Interfaces
 {
-    public interface ICita
+    public interface ICitaService
     {
         Task <IEnumerable<Cita>> GetAllCitas();
         Task<Cita> GetCitaById(int Id);
-        Task<Cita> AddCita(Cita cita);
-        Task<Cita> UpdateCita(Cita cita);
+        Task<Cita> CreateCita(Cita cita);
+        Task<Cita> UpdateCita(int Id , Cita cita);
         Task<Cita> DeleteCita(int Id);
         Task<IEnumerable<Cita>> GetDeletedCita();
         

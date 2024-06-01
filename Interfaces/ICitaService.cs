@@ -10,7 +10,8 @@ namespace Simulacro2.Interfaces
     {
         Task <IEnumerable<Cita>> GetAllCitas();
         Task<Cita> GetCitaById(int Id);
-        Task<Cita> CreateCita(Cita cita);
+        Task<Cita> CreateCita(int medicoId, int pacienteId, int tratamientoId, DateTime fecha);
+
         Task<Cita> UpdateCita(int Id , Cita cita);
         Task<Cita> DeleteCita(int Id);
         Task<IEnumerable<Cita>> GetDeletedCita();

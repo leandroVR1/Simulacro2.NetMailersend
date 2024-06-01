@@ -26,17 +26,33 @@ namespace Simulacro2.Controllers
             return Ok(await _citaService.GetAllCitas());
         }
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<Cita>> GetCita(int Id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Cita>> GetCitaById(int id)
+        {
+            var cita = await _citaService.GetCitaById(id);
+
+            if (cita == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(cita);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult<Cita>> CreateCita(int medicoId, int pacienteId, int tratamientoId, DateTime fecha)
         {
             try
             {
-                var cita = await _citaService.GetCitaById(Id);
-                if (cita == null)
+                var createCita = await _citaService.CreateCita(medicoId, pacienteId, tratamientoId, fecha);
+                if (createCita == null)
                 {
-                    return NotFound();
+                    // Alguno de los objetos no se encontró en la base de datos
+                    // Puedes manejar esto de acuerdo a tus necesidades
+                    return BadRequest("No se pudo crear la cita. Uno o más objetos no se encontraron en la base de datos.");
                 }
-                return Ok(cita);
+                return CreatedAtAction(nameof(GetCitaById), new { id = createCita.Id }, createCita);
             }
             catch (Exception ex)
             {
@@ -44,19 +60,6 @@ namespace Simulacro2.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Cita>> CreateCita(Cita cita)
-        {
-            try
-            {
-                var createCita = await _citaService.CreateCita(cita);
-                return CreatedAtAction(nameof(GetCita), new { id = createCita.Id }, createCita);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
 
 
 

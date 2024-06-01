@@ -22,16 +22,37 @@ namespace Simulacro2.Services
             _context = context;
         }
 
-        public async Task<Cita> CreateCita(Cita cita)
-        {
-            _context.Citas.Add(cita);
-            await _context.SaveChangesAsync();
+       public async Task<Cita> CreateCita(int medicoId, int pacienteId, int tratamientoId, DateTime fecha)
+{
+    var medico = await _context.Medicos.FindAsync(medicoId);
+    var paciente = await _context.Pacientes.FindAsync(pacienteId);
+    var tratamiento = await _context.Tratamientos.FindAsync(tratamientoId);
 
-            // Llamar al método para enviar el correo electrónico
-            await EnviarCorreoCita(cita);
+    if (medico == null || paciente == null || tratamiento == null)
+    {
+        // Alguno de los objetos no se encontró en la base de datos
+        // Puedes manejar esto de acuerdo a tus necesidades
+        return null;
+    }
 
-            return cita;
-        }
+    var cita = new Cita
+    {
+        Medico = medico,
+        Paciente = paciente,
+        Fecha = fecha,
+        Estado = EstadoEnum.Disponible
+    };
+
+    _context.Citas.Add(cita);
+    await _context.SaveChangesAsync();
+
+    // Llamar al método para enviar el correo electrónico
+    await EnviarCorreoCita(cita);
+
+    return cita;
+}
+
+
 
         public async Task<Cita> DeleteCita(int Id)
         {

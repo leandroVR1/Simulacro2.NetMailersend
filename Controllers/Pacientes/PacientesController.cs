@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Simulacro2.Interfaces;
 using Simulacro2.Models;
+using Simulacro2.Services;
 
 namespace Simulacro2.Controllers
 {
@@ -60,24 +61,26 @@ namespace Simulacro2.Controllers
         [HttpPut("{Id}")]
         public async Task<ActionResult<Paciente>> UpdatePaciente(int Id, Paciente paciente)
         {
-            try{
+            try
+            {
                 var updatePaciente = await _pacienteService.UpdatePaciente(Id, paciente);
                 if (updatePaciente == null)
                 {
                     return NotFound();
                 }
                 return Ok(updatePaciente);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"Internal server error: {ex.Message}");
-                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
 
 
         }
 
         [HttpDelete("{Id}")]
-        public async Task<ActionResult<Medico>> DeletePaciente(int Id){
+        public async Task<ActionResult<Medico>> DeletePaciente(int Id)
+        {
             try
             {
                 var deletePaciente = await _pacienteService.DeletePaciente(Id);
@@ -106,6 +109,43 @@ namespace Simulacro2.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+
+        [HttpGet("{id}/citas/count")]
+        public async Task<ActionResult<object>> GetCitasCountByPacienteId(int id)
+        {
+            try
+            {
+                var citasCount = await _pacienteService.GetCitasCountByPacienteId(id);
+                var response = new
+                {
+                    Message = "Cantidad de citas del paciente:",
+                    CitasCount = citasCount
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{pacienteId}/historial")]
+        public async Task<ActionResult<IEnumerable<Cita>>> GetHistorialMedico(int pacienteId)
+        {
+            try
+            {
+                var historial = await _pacienteService.GetHistorialMedico(pacienteId);
+                return Ok(historial);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+
 
 
 

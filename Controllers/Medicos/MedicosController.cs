@@ -9,19 +9,19 @@ using Simulacro2.Services;
 
 namespace Simulacro2.Controllers
 {
-[ApiController]
-[Route("api/[controller]")]
-public class MedicosController : ControllerBase
-{
-    private readonly IMedicoService _medicoService;
-
-    public MedicosController(IMedicoService medicoService)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MedicosController : ControllerBase
     {
-        _medicoService = medicoService;
-    }
+        private readonly IMedicoService _medicoService;
+
+        public MedicosController(IMedicoService medicoService)
+        {
+            _medicoService = medicoService;
+        }
 
 
-[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> GetMedicos()
         {
             return Ok(await _medicoService.GetAllMedicos());
@@ -29,87 +29,103 @@ public class MedicosController : ControllerBase
 
 
 
-    [HttpGet("{Id}")]
-    public async Task<ActionResult<Medico>> GetMedico(int Id)
-    {
-        try
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<Medico>> GetMedico(int Id)
         {
-            var medico = await _medicoService.GetMedicoById(Id);
-            if (medico == null)
+            try
             {
-                return NotFound();
+                var medico = await _medicoService.GetMedicoById(Id);
+                if (medico == null)
+                {
+                    return NotFound();
+                }
+                return Ok(medico);
             }
-            return Ok(medico);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<Medico>> CreateMedico(Medico medico)
-    {
-        try
-        {
-            var createMedico = await _medicoService.CreateMedico(medico);
-            return CreatedAtAction(nameof(GetMedico), new { id = createMedico.Id }, createMedico);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
-
-    [HttpPut("{Id}")]
-    public async Task<ActionResult<Medico>> UpdateMedico(int Id, Medico medico)
-    {
-        try
-        {
-            var updateMedico = await _medicoService.UpdateMedico(Id, medico);
-            if (updateMedico == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
-            return Ok(updateMedico);
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
 
-    [HttpDelete("{Id}")]
-    public async Task<ActionResult<Medico>> DeleteMedico(int Id)
-    {
-        try
+        [HttpPost]
+        public async Task<ActionResult<Medico>> CreateMedico(Medico medico)
         {
-            var deleteMedico = await _medicoService.DeleteMedico(Id);
-            if (deleteMedico == null)
+            try
             {
-                return NotFound();
+                var createMedico = await _medicoService.CreateMedico(medico);
+                return CreatedAtAction(nameof(GetMedico), new { id = createMedico.Id }, createMedico);
             }
-            return Ok(deleteMedico);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
 
-    [HttpGet("deleted")]
-    public async Task<IActionResult> GetDeletedMedicos()
-    {
-        try
+        [HttpPut("{Id}")]
+        public async Task<ActionResult<Medico>> UpdateMedico(int Id, Medico medico)
         {
-            var deletedMedicos = await _medicoService.GetDeletedMedico();
-            return Ok(deletedMedicos);
+            try
+            {
+                var updateMedico = await _medicoService.UpdateMedico(Id, medico);
+                if (updateMedico == null)
+                {
+                    return NotFound();
+                }
+                return Ok(updateMedico);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
-        catch (Exception ex)
+
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult<Medico>> DeleteMedico(int Id)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            try
+            {
+                var deleteMedico = await _medicoService.DeleteMedico(Id);
+                if (deleteMedico == null)
+                {
+                    return NotFound();
+                }
+                return Ok(deleteMedico);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
+
+
+        [HttpGet("deleted")]
+        public async Task<IActionResult> GetDeletedMedicos()
+        {
+            try
+            {
+                var deletedMedicos = await _medicoService.GetDeletedMedico();
+                return Ok(deletedMedicos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{medicoId}/pacientes")]
+        public async Task<ActionResult<IEnumerable<Paciente>>> GetPacientesDeMedico(int medicoId)
+        {
+            try
+            {
+                var pacientes = await _medicoService.GetPacientesDeMedico(medicoId);
+                return Ok(pacientes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
     }
-}
 
 }

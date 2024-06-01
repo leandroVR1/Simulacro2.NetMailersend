@@ -7,6 +7,7 @@ using Simulacro2.Data;
 using Simulacro2.Interfaces;
 using Simulacro2.Models;
 
+
 namespace Simulacro2.Services
 {
     public class PacienteService : IPacienteService
@@ -32,14 +33,15 @@ namespace Simulacro2.Services
                 return null;
             }
 
-            _context.Pacientes.Remove(paciente);
+            paciente.Estado = EstadoEnum.Eliminado;
             await _context.SaveChangesAsync();
             return paciente;
         }
 
+
         public async Task<IEnumerable<Paciente>> GetAllPacientes()
         {
-            return await _context.Pacientes.ToListAsync();
+            return await _context.Pacientes.Where(m => m.Estado == EstadoEnum.Disponible).ToListAsync();
         }
 
         public async Task<Paciente> GetPacienteById(int Id)
@@ -47,7 +49,7 @@ namespace Simulacro2.Services
             return await _context.Pacientes.FindAsync(Id);
         }
 
-        public async Task<Paciente> UpdatePaciente(int Id,Paciente paciente)
+        public async Task<Paciente> UpdatePaciente(int Id, Paciente paciente)
         {
             var existingPaciente = await _context.Pacientes.FindAsync(paciente.Id);
             if (existingPaciente == null)
@@ -68,7 +70,28 @@ namespace Simulacro2.Services
             return await _context.Pacientes.Where(m => m.Estado == EstadoEnum.Eliminado).ToListAsync();
         }
 
+        public async Task<int> GetCitasCountByPacienteId(int pacienteId)
+        {
+            var paciente = await _context.Pacientes.Include(p => p.Citas).FirstOrDefaultAsync(p => p.Id == pacienteId);
+            if (paciente != null)
+            {
+                return paciente.Citas.Count;
+            }
+            return 0;
+        }
+
+        public async Task<IEnumerable<Cita>> GetHistorialMedico(int pacienteId)
+        {
+            return await _context.Citas
+                .Where(c => c.PacienteId == pacienteId && c.Estado == EstadoEnum.Disponible)
+                .ToListAsync();
+        }
 
         
+
+
+
+
+
     }
 }

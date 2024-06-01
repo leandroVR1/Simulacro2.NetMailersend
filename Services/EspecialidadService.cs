@@ -25,15 +25,17 @@ namespace Simulacro2.Services
         }
         public async Task<Especialidad> DeleteEspecialidad(int Id)
         {
+          {
             var especialidad = await _context.Especialidades.FindAsync(Id);
             if (especialidad == null)
             {
                 return null;
             }
 
-            _context.Especialidades.Remove(especialidad);
+            especialidad.Estado = EstadoEnum.Eliminado;
             await _context.SaveChangesAsync();
             return especialidad;
+        }
         }
         public async Task<IEnumerable<Especialidad>> GetDeletedEspecialidad()
         {

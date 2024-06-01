@@ -14,6 +14,7 @@ namespace Simulacro2.Interfaces
         Task<Medico> UpdateMedico(int Id, Medico medico);
         Task<Medico> DeleteMedico(int Id);
         Task<IEnumerable<Medico>> GetDeletedMedico();
+        Task<IEnumerable<Paciente>> GetPacientesDeMedico(int medicoId);
 
     }
 }

@@ -14,6 +14,10 @@ namespace Simulacro2.Interfaces
         Task<Cita> UpdateCita(int Id , Cita cita);
         Task<Cita> DeleteCita(int Id);
         Task<IEnumerable<Cita>> GetDeletedCita();
+        Task<int> GetCitasCountByDay(DateTime fecha);
+        Task<IEnumerable<Cita>> GetCitasMedicoByDay(int medicoId, DateTime fecha);
+        
+
         
     }
 }

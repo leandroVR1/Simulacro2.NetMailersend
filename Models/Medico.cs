@@ -1,5 +1,6 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using System.Text.Json.Serialization;
 
 namespace Simulacro2.Models
 {
@@ -18,10 +19,13 @@ namespace Simulacro2.Models
         [Phone]
         public string? Telefono { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public EstadoEnum? Estado { get; set; }
 
         public int EspecialidadId { get; set; }
         public Especialidad? Especialidad { get; set; }
-         public ICollection<Cita>? Citas { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Cita>? Citas { get; set; }
     }
 }

@@ -34,10 +34,33 @@ namespace Simulacro2.Data
                 .WithMany(e => e.Medicos)
                 .HasForeignKey(m => m.EspecialidadId);
 
+            modelBuilder.Entity<Tratamiento>()
+                .HasOne(t => t.Cita)
+                .WithMany(c => c.Tratamientos)
+                .HasForeignKey(t => t.CitaId);
+
             // Configuración de mapeo para el Enum EstadoEnum en la tabla Medicos
             modelBuilder.Entity<Medico>()
                 .Property(m => m.Estado)
                 .HasConversion<string>();
+
+            modelBuilder.Entity<Especialidad>()
+                .Property(m => m.Estado)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Paciente>()
+                .Property(m => m.Estado)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Cita>()
+                .Property(m => m.Estado)
+                .HasConversion<string>();
+            
+            modelBuilder.Entity<Tratamiento>()
+                .Property(m => m.Estado)
+                .HasConversion<string>();
+
+            
         }
     }
 }

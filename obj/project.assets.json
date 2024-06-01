@@ -2722,19 +2722,19 @@
     ]
   },
   "packageFolders": {
-    "/home/riwip5-047/.nuget/packages/": {}
+    "/home/riwip4-046/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/riwip5-047/Documents/Leo/Simulacro2/Simulacro2.csproj",
+      "projectUniqueName": "/home/riwip4-046/Documents/leo/Simulacro2.NetMailersend/Simulacro2.csproj",
       "projectName": "Simulacro2",
-      "projectPath": "/home/riwip5-047/Documents/Leo/Simulacro2/Simulacro2.csproj",
-      "packagesPath": "/home/riwip5-047/.nuget/packages/",
-      "outputPath": "/home/riwip5-047/Documents/Leo/Simulacro2/obj/",
+      "projectPath": "/home/riwip4-046/Documents/leo/Simulacro2.NetMailersend/Simulacro2.csproj",
+      "packagesPath": "/home/riwip4-046/.nuget/packages/",
+      "outputPath": "/home/riwip4-046/Documents/leo/Simulacro2.NetMailersend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/riwip5-047/.nuget/NuGet/NuGet.Config"
+        "/home/riwip4-046/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -2752,6 +2752,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2796,7 +2801,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.105/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/riwip4-046/.dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

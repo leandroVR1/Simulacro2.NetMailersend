@@ -4,16 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Simulacro2.Models;
 
+
 namespace Simulacro2.Interfaces
 {
-    public interface ITratamiento
+    public interface ITratamientoService
     {
         Task <IEnumerable<Tratamiento>> GetAllTratamientos();
         Task<Tratamiento> GetTratamientoById(int Id);
-        Task<Tratamiento> AddTratamiento(Tratamiento tratamiento);
-        Task<Tratamiento> UpdateTratamiento(Tratamiento tratamiento);
+        Task<Tratamiento> CreateTratamiento(Tratamiento tratamiento);
+        Task<Tratamiento> UpdateTratamiento(int Id ,Tratamiento tratamiento);
         Task<Tratamiento> DeleteTratamiento(int Id);
-        Task<IEnumerable<Tratamiento>> GetDeletedTratamientos();
+        Task<IEnumerable<Tratamiento>> GetDeletedTratamiento();
           
     }
 }

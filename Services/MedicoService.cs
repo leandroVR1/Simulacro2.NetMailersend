@@ -25,15 +25,15 @@ namespace Simulacro2.Services
             return medico;
         }
 
-        public async Task<Medico> DeleteMedico(int id)
+        public async Task<Medico> DeleteMedico(int Id)
         {
-            var medico = await _context.Medicos.FindAsync(id);
+            var medico = await _context.Medicos.FindAsync(Id);
             if (medico == null)
             {
                 return null;
             }
 
-            _context.Medicos.Remove(medico);
+            medico.Estado = EstadoEnum.Eliminado;
             await _context.SaveChangesAsync();
             return medico;
         }
@@ -43,12 +43,14 @@ namespace Simulacro2.Services
             return await _context.Medicos.Where(m => m.Estado == EstadoEnum.Eliminado).ToListAsync();
         }
 
+
         public async Task<IEnumerable<Medico>> GetAllMedicos()
         {
-            return await _context.Medicos.Where(m => m.Estado == EstadoEnum.Disponible).ToListAsync();
-            
+            return await _context.Medicos
+                                 .Where(m => m.Estado == EstadoEnum.Disponible)
+                                 .Include(m => m.Especialidad)
+                                 .ToListAsync();
         }
-
 
 
         public async Task<Medico> GetMedicoById(int id)
@@ -72,5 +74,15 @@ namespace Simulacro2.Services
             await _context.SaveChangesAsync();
             return existingMedico;
         }
+
+        public async Task<IEnumerable<Paciente>> GetPacientesDeMedico(int medicoId)
+        {
+            return await _context.Citas
+                .Where(c => c.MedicoId == medicoId && c.Estado == EstadoEnum.Disponible)
+                .Select(c => c.Paciente)
+                .Distinct()
+                .ToListAsync();
+        }
+
     }
 }

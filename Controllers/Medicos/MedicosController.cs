@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Simulacro2.Interfaces;
+using Simulacro2.Methods;
 using Simulacro2.Models;
-using Simulacro2.Services;
 
 namespace Simulacro2.Controllers
 {
@@ -20,112 +17,46 @@ namespace Simulacro2.Controllers
             _medicoService = medicoService;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetMedicos()
         {
-            return Ok(await _medicoService.GetAllMedicos());
+            return await GetMedicosMethod.GetAllMedicos(_medicoService);
         }
 
-
-
         [HttpGet("{Id}")]
-        public async Task<ActionResult<Medico>> GetMedico(int Id)
+        public async Task<IActionResult> GetMedico(int Id)
         {
-            try
-            {
-                var medico = await _medicoService.GetMedicoById(Id);
-                if (medico == null)
-                {
-                    return NotFound();
-                }
-                return Ok(medico);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return await GetMedicoByIdMethod.GetMedicoById(Id, _medicoService);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Medico>> CreateMedico(Medico medico)
+        public async Task<IActionResult> CreateMedico(Medico medico)
         {
-            try
-            {
-                var createMedico = await _medicoService.CreateMedico(medico);
-                return CreatedAtAction(nameof(GetMedico), new { id = createMedico.Id }, createMedico);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return await CreateMedicoMethod.CreateMedico(medico, _medicoService);
         }
 
         [HttpPut("{Id}")]
-        public async Task<ActionResult<Medico>> UpdateMedico(int Id, Medico medico)
+        public async Task<IActionResult> UpdateMedico(int Id, Medico medico)
         {
-            try
-            {
-                var updateMedico = await _medicoService.UpdateMedico(Id, medico);
-                if (updateMedico == null)
-                {
-                    return NotFound();
-                }
-                return Ok(updateMedico);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return await UpdateMedicoMethod.UpdateMedico(Id, medico, _medicoService);
         }
 
         [HttpDelete("{Id}")]
-        public async Task<ActionResult<Medico>> DeleteMedico(int Id)
+        public async Task<IActionResult> DeleteMedico(int Id)
         {
-            try
-            {
-                var deleteMedico = await _medicoService.DeleteMedico(Id);
-                if (deleteMedico == null)
-                {
-                    return NotFound();
-                }
-                return Ok(deleteMedico);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return await DeleteMedicoMethod.DeleteMedico(Id, _medicoService);
         }
-
 
         [HttpGet("deleted")]
         public async Task<IActionResult> GetDeletedMedicos()
         {
-            try
-            {
-                var deletedMedicos = await _medicoService.GetDeletedMedico();
-                return Ok(deletedMedicos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return await GetDeletedMedicosMethod.GetDeletedMedicos(_medicoService);
         }
 
         [HttpGet("{medicoId}/pacientes")]
-        public async Task<ActionResult<IEnumerable<Paciente>>> GetPacientesDeMedico(int medicoId)
+        public async Task<IActionResult> GetPacientesDeMedico(int medicoId)
         {
-            try
-            {
-                var pacientes = await _medicoService.GetPacientesDeMedico(medicoId);
-                return Ok(pacientes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return await GetPacientesDeMedicoMethod.GetPacientesDeMedico(medicoId, _medicoService);
         }
-
     }
-
 }

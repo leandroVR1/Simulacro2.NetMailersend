@@ -58,5 +58,7 @@ namespace Simulacro2.Controllers
         {
             return await GetPacientesDeMedicoMethod.GetPacientesDeMedico(medicoId, _medicoService);
         }
+
+        
     }
 }

@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Simulacro2.Models;
+
 // Definición de la interfaz IMedicoService en el espacio de nombres Simulacro2.Interfaces.
 namespace Simulacro2.Interfaces
 {

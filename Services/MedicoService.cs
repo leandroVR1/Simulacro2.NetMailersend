@@ -98,5 +98,21 @@ public async Task<IEnumerable<Paciente>> GetPacientesDeMedico(int medicoId)
        .Distinct()
        .ToListAsync();
 }
+
+ //Metodo para obtener citas asociadas a un medico en especifico
+ public async Task<IEnumerable<Cita>> GetCitasDeMedico(int medicoId)
+ {
+     // Se seleccionan las citas donde el médico es el especificado y el estado es disponible.
+     // Luego, se seleccionan los pacientes asociados a esas citas.
+     // Se utiliza el método Distinct para eliminar cualquier paciente duplicado.
+     // Finalmente, se devuelve la lista de pacientes.
+     return await _context.Citas
+         // Se seleccionan las citas donde el médico es el especificado y el estado es disponible.
+         // Esto se logra con el método Where, que filtra las citas según las condiciones especificadas.
+        .Where(c => c.MedicoId == medicoId && c.Estado == EstadoEnum.Disponible)
+        .ToListAsync();
+ }
+ 
+
     }
 }

@@ -1,3 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Simulacro2.Data;
+using Simulacro2.Interfaces;
+using Simulacro2.Models;
+
 // Definición de la clase PacienteService en el espacio de nombres Simulacro2.Services.
 namespace Simulacro2.Services
 {

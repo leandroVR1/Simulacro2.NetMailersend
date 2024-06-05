@@ -6,9 +6,11 @@ using Simulacro2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Añadir servicios al contenedor.
 void AddCustomDbContext<TContext>(string connectionString) where TContext : DbContext
 {
+    // Utilizar la inyección de dependencias para añadir un DbContext al contenedor de servicios.
+    // El contexto está configurado para utilizar MySQL como proveedor de base de datos.
     builder.Services.AddDbContext<TContext>(options =>
         options.UseMySql(
             connectionString,
@@ -17,10 +19,10 @@ void AddCustomDbContext<TContext>(string connectionString) where TContext : DbCo
     );
 }
 
-// Configurar el contexto de la base de datos
+// Configurar el contexto de la base de datos.
 AddCustomDbContext<BaseContext>(builder.Configuration.GetConnectionString("MySqlConnection"));
 
-// Registro de servicios
+// Registrar servicios.
 builder.Services.AddScoped<MedicoService>();
 builder.Services.AddScoped<IMedicoService, MedicoService>();
 
@@ -36,23 +38,26 @@ builder.Services.AddScoped<ICitaService, CitaService>();
 builder.Services.AddScoped<TratamientoService>();
 builder.Services.AddScoped<ITratamientoService, TratamientoService>();
 
-// Configuración de los controladores y opciones JSON
+// Configurar controladores y opciones JSON.
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
+    // Configurar opciones de serialización JSON.
+    // Ignorar valores nulos al escribir JSON.
+    // Utilizar un convertidor personalizado para manejar enums como cadenas.
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-
-// Configuración de Swagger para la documentación de la API
+// Configurar Swagger para la documentación de la API.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure el pipeline de solicitudes HTTP
+// Configurar el pipeline de solicitudes HTTP.
 if (app.Environment.IsDevelopment())
 {
+    // En el entorno de desarrollo, usar Swagger para la documentación de la API.
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
